@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/timmcwilliams/liri-node-app#readme",
   "dependencies": {
+    "get-tweets": "^4.0.0",
     "node-spotify-api": "^1.0.7"
-  }
+  },
+  "devDependencies": {}
 }
