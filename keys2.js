@@ -1,5 +1,4 @@
 
-console.log('this is loaded');
 // var Twitter = require('twitter-js-client').Twitter;
 var Twitter = require('twitter');
 var configtwit = require("./configtwit");
@@ -9,7 +8,6 @@ var params = {
 	count: 20
 };
 client.get("search/tweets", params, gotData);
-
 function gotData(err, data, response){
 	// console.log(data)
 	var tweets = data.statuses;
@@ -17,24 +15,21 @@ function gotData(err, data, response){
 		console.log(tweets[i].text);
 }
 
-
-
-
-//   consumer_key: 'yuYmzFbLNIe76QS5DY3F4emID',
-//   consumer_secret: '09yyt0A6uToaBOAW52xc0GMcXvnJTpEGSrbglkrfXA8mfSWfTM',
-//   access_token_key: '931019297996050435-W33p8coXWM6W1PlCyQMwkhpuPKQ0bBU',
-//   access_token_secret: '4cwkI1lcJXY1ZKyCdeC35t33PIUpLrKR1htdNO5jKOEXu'
+var spotify = new Spotify({
+//   id: <your spotify client id>,
+//   secret: <your spotify client secret>
 // });
-// // count=0
-
-// var params = {Kona4403: 'nodejs'};
-// client.get('statuses/user_timeline', params, function(error, tweets, response) {
-//   if (!error) {
-//     console.log(tweets);
-
-     
-//     // console.log("tweet: " + JSON.parse(tweets)user.text);
+ 
+// spotify.search({ type: 'track', query: 'All the Small Things' }, function(err, data) {
+//   if (err) {
+//     return console.log('Error occurred: ' + err);
 //   }
-
+ 
+// console.log(data); 
 // });
-// module.exports = client;
+// module.exports = spotify;
+// spotify
+// Client ID
+// c4645856c24f420595a6490d61de999d
+// Client Secret
+// 4983512e8a244b2ea5450cdf16728dd7
