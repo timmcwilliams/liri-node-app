@@ -1,7 +1,7 @@
 //var keysModule = require("./keys.js");
-var Twitter = require('twitter');
+//var Twitter = require("twitter");
 var fs =require("fs");
-var request = require("request");
+
 var command = process.argv[2];
 var argument = process.argv[3];
 
@@ -20,9 +20,9 @@ function runLiri()
 	    case "movie-this":
 	        movieCode();
 	        break;
-	    case "do-what-it-says":
-	        doWhatItSays();
-	        break;        
+	    // case "do-what-it-says":
+	    //     doWhatItSays();
+	    //     break;        
 	    default:
 	    	console.log("Please Enter a Valid Command");    
 	}
@@ -31,7 +31,7 @@ function runLiri()
 //_______________________________________________________________________________________________________________________________-
 
 function twitterCode(){
-		
+		var Twitter = require('twitter');
 		var configtwit = require("./configtwit");
 		var client = new Twitter(configtwit);
 		var params = { 
@@ -40,31 +40,23 @@ function twitterCode(){
 		};
 		client.get("search/tweets", params, gotData);
 		function gotData(err, data, response){
-			console.log(data)
+			// console.log(data)
 			var tweets = data.statuses;
 			for(var i=0; i<tweets.length; i++)
 				console.log(tweets[i].text);
 		}//var client = new Twitter(keysModule.twitterKeys); 
 			console.log("running twitter code");
-}
+		}
 
 //_____________________________________________________________________________________________________________________
 function movieCode(){
-
-// requests moved to top
-	// var request = require("request");
-
-	// default if user did not provide a movie
-	if(argument === undefined)
-	{
-		argument = "Mr. Nobody";
-	}	
+var request = require("request");
 
 
-	request("http://www.omdbapi.com/?t=" + argument + "&y=&plot=short&apikey=40e9cece", function(error, response, body) {
+request("http://www.omdbapi.com/?t=gladiator&y=&plot=short&apikey=40e9cece", function(error, response, body) {
 
   // If the request is successful (i.e. if the response status code is 200)
-	if (!error && response.statusCode === 200) {
+  if (!error && response.statusCode === 200) {
 
  
     console.log("The movie's title is: " + JSON.parse(body).Title);
@@ -79,21 +71,17 @@ function movieCode(){
   }
 }); 
     
-	
+	// default if user did not provide a movie
+	if(argument === undefined)
+	{
+		argument = "Mr. Nobody";
+	}	
 
 	console.log("running movie code. Movie:", argument);
 }
 
 // ___________________________________________________________________________________________________________________________
 function spottifyCode(){
-
-	// default if user did not provide a song
-	if(argument === undefined)
-	{
-		argument = "The Sign";
-	}	
-	console.log("running spot code. Song:", argument);
-
 	var Spotify = require('node-spotify-api');
 // var configtwit = require("./configtwit");
 // var client = new Twitter(configtwit);
@@ -102,8 +90,8 @@ function spottifyCode(){
 		  secret: "4983512e8a244b2ea5450cdf16728dd7",
 		  redirect_uri: "http://localhost:8888/callback" 
 		});
-	
-		spotify.search({ type: 'track', query: argument }, function(err, data) {
+		var songQuery = argument;
+		spotify.search({ type: 'track', query: songQuery }, function(err, data) {
 		  if (err) {
 		    return console.log('Error occurred: ' + err);
 		}
@@ -111,27 +99,32 @@ function spottifyCode(){
 		console.log("Album Name: " +data.tracks.items[0].album.name); 
 		console.log("URL Name: " , data.tracks.items[0].album.external_urls.spotify);
 		});
-	
+	// default if user did not provide a song
+	if(argument === undefined)
+	{
+		argument = "The Sign";
+	}	
+	console.log("running spot code. Song:", argument);
 }
 //____________________________________________________________________________________________________________________________
 
-function doWhatItSays(){
+// function doWhatItSays(){
 
-	console.log("running doWhat");
+// 	console.log("running doWhat");
 
-	fs.readFile("random.txt", "utf8", function(err,data){
+// 	fs.readFile("random.txt", "utf8", function(err,data){
 		
-		// data is a string from our file.
-		console.log("data:", data);
+// 		// data is a string from our file.
+// 		console.log("data:", data);
 
-		// we split the string by ',' into an array.
-		var arr = data.split(",");
+// 		// we split the string by ',' into an array.
+// 		var arr = data.split(",");
 
-		//from the array we get our command/argument
-		command = arr[0];
-		argument = arr[1];
+// 		//from the array we get our command/argument
+// 		command = arr[0];
+// 		arrgument = arr[1];
 
-		// we call runLiri again with our new command and argument from file
-		runLiri();
-	});
-}
+// 		// we call runLiri again with our new command and arrgument from file
+// 		runLiri();
+// 	});
+// }
